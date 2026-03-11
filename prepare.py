@@ -29,7 +29,7 @@ import torch
 
 MAX_SEQ_LEN = 2048       # context length
 TIME_BUDGET = 300        # training time budget in seconds (5 minutes)
-EVAL_TOKENS = 40 * 524288  # number of tokens for val eval
+EVAL_TOKENS = 40  # number of tokens for val eval
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -58,8 +58,8 @@ def download_single_shard(index):
     """Download one parquet shard with retries. Returns True on success."""
     filename = f"shard_{index:05d}.parquet"
     filepath = os.path.join(DATA_DIR, filename)
-    if os.path.exists(filepath):
-        return True
+    # if os.path.exists(filepath):
+    #     return True
 
     url = f"{BASE_URL}/{filename}"
     max_attempts = 5
@@ -85,7 +85,7 @@ def download_single_shard(index):
                         pass
             if attempt < max_attempts:
                 time.sleep(2 ** attempt)
-    return False
+    # return False
 
 
 def download_data(num_shards, download_workers=8):
@@ -143,9 +143,9 @@ def train_tokenizer():
     tokenizer_pkl = os.path.join(TOKENIZER_DIR, "tokenizer.pkl")
     token_bytes_path = os.path.join(TOKENIZER_DIR, "token_bytes.pt")
 
-    if os.path.exists(tokenizer_pkl) and os.path.exists(token_bytes_path):
-        print(f"Tokenizer: already trained at {TOKENIZER_DIR}")
-        return
+    # if os.path.exists(tokenizer_pkl) and os.path.exists(token_bytes_path):
+    #     print(f"Tokenizer: already trained at {TOKENIZER_DIR}")
+    #     return
 
     os.makedirs(TOKENIZER_DIR, exist_ok=True)
 
